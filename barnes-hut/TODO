@@ -1,0 +1,3 @@
+In the events of fixing and updating various things, the method of testing error
+cannot be stopped and restarted. This needs reimplemented.
+
