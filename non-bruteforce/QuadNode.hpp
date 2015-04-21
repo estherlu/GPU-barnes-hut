@@ -19,7 +19,7 @@ private:
 public:
 	//Create a quadtree with a certain space
 	QuadNode(long double x1, long double x2, 
-		long double y1, long double y2, long double x, long double y, long double mass, Body* mybody);
+		long double y1, long double y2, Body* mybody);
 
     //Create a quadtree using existing file
 //	QuadNode( BodySystem* bs );
