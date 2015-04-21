@@ -10,21 +10,14 @@ class Body{
 		 static const double G = 6.673e-11;
 
 	public:
-		double x,y;
-		double vx,vy;
-		double fx,fy;
-		double ax,ay;
-		double mass;
-		double Force;
+		double x,y;//location of the body
+		double vx,vy;//velovity in the x and y direction
+		double fx,fy;//force in x and y direction
+		double ax,ay;//acceleration in x and y firection
+		double mass;//mass of the body
 
-		Body(double x,double y,double vx,double vy, double mass);
-		void update(double time);
-		double distanceTo(Body b);
-		void resetForce();
-		void addForce(Body b);
-		void toString();
-
-
+		Body();// initialize the body as all zero values
+		Body(double bMass,double bX,double bY);//initialize the body with position and mass
 
 
 };
