@@ -161,13 +161,13 @@ unsigned int QuadNode::getQuadrant(Body* body){
 	
 	if((body->x >= this->xmin) && (body->x <= (this->xmin + this->xmax)/2)){
 		if((body->y >= this->ymin) && (body->y <= (this->ymin + this->ymax)/2){
-			return 2;
+			return 3;
 		}else if((body->y > (this->ymin + this->ymax)/2) && (body->y <= this->ymax)){
 			return 0;
 		}else return 5;
 	}else if((body->x > (this->xmin + this->xmax)/2) && (body->x <= this->xmax)){
 		if((body->y >= this->ymin) && (body->y <= (this->ymin + this->ymax)/2)){
-			return 3;
+			return 2;
 		}else if((body->y > (this->ymin + this->ymax)/2) && (body->y <= this->ymax){
 			return 1;
 		}else return 5;
