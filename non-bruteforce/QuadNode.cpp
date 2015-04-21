@@ -98,7 +98,7 @@ QuadNode::calAllForce(BodySystem* bs){
 }
 */
 
-void QuadNode::getQuadrant(Body* body){
+unsigned int QuadNode::getQuadrant(Body* body){
     //0,1,2,3 means the four quadrant, 5 means that this body does not fit in this quadnode
 	if(body->x >= xmin && body->x <= (xmin+xmax)/2){
 		if(body->y >= ymin && body->y <= (ymin+ymax)/2){
@@ -132,8 +132,12 @@ long double QuadNode::getYmin(){
 long double QuadNode::getYmax(){
 	return this->ymax;
 }
-void QuadNode::setTheta(){
-	return this->theta;
+void QuadNode::setTheta(long double inTheta){
+	this->theta=inTheta;
+	if(!this->isparent)
+		return;
+	for(unsigned int i=0;i<4;i++)
+		this->myChildren[i]->setTheta(this->theta);
 }
 bool QuadNode::isParent(){
 	return this->isparent;

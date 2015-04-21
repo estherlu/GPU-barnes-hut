@@ -46,7 +46,7 @@ public:
 //	void calcAllForce(BodySystem* bs);
 
 	//Get which quadrant the body is in 
-	void getQuadrant(Body* body);
+	unsigned int getQuadrant(Body* body);
 
 	//Get the left side of the quadnode
 	long double getXmin();
@@ -61,7 +61,7 @@ public:
 	long double getYmax();
 
 	//Set the threshold of distance/r
-	long double setTheta();
+	void setTheta(long double inTheta);
 
 	//If the quadnode is a parent, return true
 	bool isParent();
