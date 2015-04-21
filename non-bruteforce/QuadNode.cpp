@@ -1,74 +1,144 @@
-#ifndef QUADNODE_H
-#define QUADNODE_H
-#include "Body.hpp"
+/**
+*this file defines the quadtree
+**/
 
-#include <string> 
+#include "QuadNode.hpp"
 
-class QuadNode{
-private:
-	long double xmin,xmax;
-	long double ymin,ymax;
-	long double theta;
-	long double mx, my;//center of mass
-	long double m; //total mass
-	bool isactive; 
-	bool isparent;
-	Body* me;
-	QuadNode** myChildren;  //Not sure 
+#include <iostream>
+#include <cmath>
 
-public:
-	//Create a quadtree with a certain space
-	QuadNode(long double x1, long double x2, 
-		long double y1, long double y2, long double x, long double y, long double mass, Body* mybody);
+QuadNode::QuadNode(long double x1, long double x2, 
+		long double y1, long double y2, long double x, long double y, long double mass, Body* mybody):
+	xmin(xmin),
+	xmax(xmax),
+	ymin(ymin),
+	ymax(ymax),
+	mx(x),
+	my(y),
+	m(mass),
+	theta(1.0),
+	isactive(true),
+	isparent(false),
+	me(mybody),
+	myChildren(NULL)
+{}
 
-    //Create a quadtree using existing file
-//	QuadNode( BodySystem* bs );
+/*
+QuadNode::QuadNode(BodySystem* ps)
+{
+	//Some setups with the body system
+}
+*/
 
-    // deletes all associated memory
-	~QuadNode();
-    
-    //Add a single body to the quadnode
-	void addBody (Body* body);
+QuadNode::~QuadNode()
+{
+	this->clearNode();
+}
 
-    //Add all bodies in the existing file to the quadnode
-//	void addAllBody (BodySystem* bs);
+void QuadNode::addBody(Body* body)
+{
+	//If this quadnode does not have a body in it, just add new body and return.
+	if(!isactive){
+		this->me = body;
+		this->mx = body->x;
+		this->my = body->y;
+		this->m = body->mass;
+		this->isactive= true;
+		return;
+	}
+	if(!this->isparent){
+		this->createChildren();
 
-	//Clear the contents of the node
-	void clearNode ();
+		this->myChildren[this->getQuadrant(body)] = addBody(body);
+		this->myChildren[getQuadrant(me)] = addBody(me);
+		this->me = NULL;
 
-	//Recalculate center of mass and total mass
-	void calcMass();
+		this->calcMass();
+	}else{
+		this->myChildren[this->getQuadrant(body)] = addBody(body);
+		//this->myChildren[getQuadrant(me)] = addBody(me);
 
-	//Calculate a single body's force
-	void calcForce(Body* body);
+		this->calcMass();
+	}
 
-	//Calculate all force
-//	void calcAllForce(BodySystem* bs);
+}
 
-	//Get which quadrant the body is in 
-	unsigned int getQuadrant(Body* body);
+/*
+QuadNode::addAllBody (BodySystem* bs){
 
-	//Get the left side of the quadnode
-	long double getXmin();
+}
+*/
 
-    //Get the right side of the quadnode
-	long double getXmax();
-    
-    //Get the botton of the quadnode
-	long double getYmin();
+void QuadNode::clearNode (){
 
-	//Get the top of the quadnode
-	long double getYmax();
+}
 
-	//Set the threshold of distance/r
-	void setTheta(long double inTheta);
+void QuadNode::calcMass(){
+	if(!this->isparent)
+		return;
+	//reset the center of mass and total mass to 0
+	this->mx=0;
+	this->my=0;
+	this->m=0;
 
-	//If the quadnode is a parent, return true
-	bool isParent();
+	// for(unsigned int i=0;i<4;i++){
+	// 	if(this->)
+	// }
 
-private:
-    //create children for this node
-	void createChildren();
 
-};
-#endif
+}
+
+void QuadNode::calcForce(Body* body){
+
+}
+
+/*
+QuadNode::calAllForce(BodySystem* bs){
+
+}
+*/
+
+unsigned int QuadNode::getQuadrant(Body* body){
+    //0,1,2,3 means the four quadrant, 5 means that this body does not fit in this quadnode
+	if(body->x >= xmin && body->x <= (xmin+xmax)/2){
+		if(body->y >= ymin && body->y <= (ymin+ymax)/2){
+			return 2;
+		}else if(body->y > (ymin+ymax)/2 && body->y <= ymax){
+			return 0;
+		}else return 5;
+	}else if(body->x > (xmin+xmax)/2 && body->x <= xmax){
+		if(body->y >= ymin && body->y <= (ymin+ymax)/2){
+			return 3;
+		}else if(body->y > (ymin+ymax)/2 && body->y <= ymax){
+			return 1;
+		}else return 5;
+	}else return 5;
+}
+
+
+void QuadNode::createChildren(){
+
+}
+
+long double QuadNode::getXmin(){
+	return this->xmin;
+}
+long double QuadNode::getXmax(){
+	return this->xmax;
+}
+long double QuadNode::getYmin(){
+	return this->ymin;
+}
+long double QuadNode::getYmax(){
+	return this->ymax;
+}
+void QuadNode::setTheta(long double inTheta){
+	this->theta=inTheta;
+	if(!this->isparent)
+		return;
+	for(unsigned int i=0;i<4;i++)
+		this->myChildren[i]->setTheta(this->theta);
+}
+bool QuadNode::isParent(){
+	return this->isparent;
+}
