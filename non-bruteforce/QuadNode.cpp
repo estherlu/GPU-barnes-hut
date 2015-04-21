@@ -5,6 +5,8 @@
 #include "QuadNode.hpp"
 
 #include <iostream>
+using std::cerr;
+using std::cout;
 #include <cmath>
 
 QuadNode::QuadNode(long double x1, long double x2, 
@@ -46,6 +48,9 @@ void QuadNode::addBody(Body* body)
 		this->isactive= true;
 		return;
 	}
+	//if it is not empty
+	//if it is a leaf node, just divide it
+	//if it is not, look into its corresponding child
 	if(!this->isparent){
 		this->createChildren();
 
@@ -70,9 +75,11 @@ QuadNode::addAllBody (BodySystem* bs){
 */
 
 void QuadNode::clearNode (){
+
+	//if it is not active, no need to change
 	if(!this->isactive)
 		return;
-
+	//clear the node's attribute
 	this->me = NULL;
 	this->m = 0;
 	this->mx = 0;
@@ -82,6 +89,7 @@ void QuadNode::clearNode (){
 	if(!this->isparent)
 		return;
 
+	//delete all the children
 	for(unsigned int i=0;i<4;i++){
 		if(this->myChildren[i] != NULL){
 			delete this->myChildren[i];
@@ -102,6 +110,7 @@ void QuadNode::calcMass(){
 	this->my=0;
 	this->m=0;
 
+	//calculate from the children's mass & centre of mass
 	for(unsigned int i=0;i<4;i++){
 		if(this->myChildren[i]->isactive){
 			this->m += this->myChildren[i]->m;
@@ -147,6 +156,7 @@ void QuadNode::createChildren(){
 	if(!this->isactive)
 		return;
 
+	//if it is already a parent, clear the children
 	if(this->isparent){
 		for(unsigned int i=0;i<4;i++){
 			delete this->myChildren[i];
@@ -154,6 +164,7 @@ void QuadNode::createChildren(){
 		}
 	}
 
+	//divide the node into four parts, each part as a child
 	this->myChildren=new QuadNode*[4];
 	long double xmid = (this->xmin + this->xmax)/2;
 	long double ymid = (this->ymin + this->ymax)/2;
