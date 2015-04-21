@@ -71,8 +71,6 @@ private:
 	void createChildren();
 
 };
-<<<<<<< HEAD
+
 #endif
-=======
-#endif
->>>>>>> 9c19727cce6c8606e328fda6545088ea03727e6a
+
