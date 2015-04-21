@@ -4,6 +4,16 @@
 #include <string> 
 
 class QuadNode{
+private:
+	long double xmin,xmax;
+	long double ymin,ymax;
+	long double theta;
+	long double mx, my;//center of mass
+	long double m; //total mass
+	bool isparent;
+	Body* me;
+	QuadNode** mChildren;
+
 public:
 	//Create a quadtree with a certain space
 	QuadNode(long double xmin, long double xmax, 
@@ -56,7 +66,10 @@ public:
 	//Set the threshold of distance/r
 	long double setTheta(long double nTheta);
 
-	//
+	//If the quadnode is a parent, return true
+	bool isParent();
+
+
     
 
 };
