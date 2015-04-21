@@ -1,5 +1,6 @@
 #ifndef QUADNODE_H
 #define QUADNODE_H
+#include "Body.hpp"
 
 #include <string> 
 
@@ -10,6 +11,7 @@ private:
 	long double theta;
 	long double mx, my;//center of mass
 	long double m; //total mass
+	bool isactive; 
 	bool isparent;
 	Body* me;
 	QuadNode** myChildren;  //Not sure 
@@ -17,10 +19,10 @@ private:
 public:
 	//Create a quadtree with a certain space
 	QuadNode(long double x1, long double x2, 
-		long double y1, long double y2, long double x, long double y, long double mass, Body* mybody)
+		long double y1, long double y2, long double x, long double y, long double mass, Body* mybody);
 
     //Create a quadtree using existing file
-	QuadNode( BodySystem* bs );
+//	QuadNode( BodySystem* bs );
 
     // deletes all associated memory
 	~QuadNode();
@@ -29,7 +31,7 @@ public:
 	void addBody (Body* body);
 
     //Add all bodies in the existing file to the quadnode
-	void addAllBody (BodySystem* bs);
+//	void addAllBody (BodySystem* bs);
 
 	//Clear the contents of the node
 	void clearNode ();
@@ -41,7 +43,7 @@ public:
 	void calcForce(Body* body);
 
 	//Calculate all force
-	void calcAllForce(BodySystem* bs);
+//	void calcAllForce(BodySystem* bs);
 
 	//Get which quadrant the body is in 
 	void getQuadrant(Body* body);
@@ -68,7 +70,5 @@ private:
     //create children for this node
 	void createChildren();
 
-
-    
-
 };
+#endif

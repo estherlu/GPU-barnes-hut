@@ -8,76 +8,97 @@
 #include <cmath>
 
 QuadNode::QuadNode(long double x1, long double x2, 
-		long double y1, long double y2, long double x, long double y, long double mass, Body* mybody)
- {  xmin(xmin),
-    xmax(xmax),
-    ymin(ymin),
-    ymax(ymax),
-    mx(x),
-    my(y),
-    m(mass),
-    theta(1.0),
-    isparent(false),
-    me(mybody),
-    myChildren(NULL)
-}
+		long double y1, long double y2, long double x, long double y, long double mass, Body* mybody):
+	xmin(xmin),
+	xmax(xmax),
+	ymin(ymin),
+	ymax(ymax),
+	mx(x),
+	my(y),
+	m(mass),
+	theta(1.0),
+	isactive(true),
+	isparent(false),
+	me(mybody),
+	myChildren(NULL)
+{}
 
+/*
 QuadNode::QuadNode(BodySystem* ps)
 {
 	//Some setups with the body system
 }
+*/
 
-QuadNode::~QuadNode();
+QuadNode::~QuadNode()
 {
-	this->clear();
+	this->clearNode();
 }
 
-QuadNode::addBody(Body* body){
+void QuadNode::addBody(Body* body)
+{
 	//If this quadnode does not have a body in it, just add new body and return.
-    if(me==NULL){
-    	this->me = body;
-    	this->mx = body->x;
-    	this->my = body->y;
-    	this->m = body->mass;
-    	return;
-    }
-    if(!this->isparent){
-    	this->createChildren();
+	if(!isactive){
+		this->me = body;
+		this->mx = body->x;
+		this->my = body->y;
+		this->m = body->mass;
+		this->isactive= true;
+		return;
+	}
+	if(!this->isparent){
+		this->createChildren();
 
-    	this->myChildren[this->getQuadrant(body)] = addBody(body);
-    	this->myChildren[getQuadrant(me)] = addBody(me);
+		this->myChildren[this->getQuadrant(body)] = addBody(body);
+		this->myChildren[getQuadrant(me)] = addBody(me);
+		this->me = NULL;
 
-    	this->calcMass();
-    }else{
-    	this->myChildren[this->getQuadrant(body)] = addBody(body);
-    	this->myChildren[getQuadrant(me)] = addBody(me);
+		this->calcMass();
+	}else{
+		this->myChildren[this->getQuadrant(body)] = addBody(body);
+		//this->myChildren[getQuadrant(me)] = addBody(me);
 
-    	this->calcMass();
-    }
+		this->calcMass();
+	}
 
 }
 
+/*
 QuadNode::addAllBody (BodySystem* bs){
 
 }
+*/
 
-QuadNode::clearNode (){
-
-}
-
-QuadNode::calcMass(){
+void QuadNode::clearNode (){
 
 }
 
-QuadNode::calcForce(Body* body){
+void QuadNode::calcMass(){
+	if(!this->isparent)
+		return;
+	//reset the center of mass and total mass to 0
+	this->mx=0;
+	this->my=0;
+	this->m=0;
+
+	// for(unsigned int i=0;i<4;i++){
+	// 	if(this->)
+	// }
+
 
 }
 
+void QuadNode::calcForce(Body* body){
+
+}
+
+/*
 QuadNode::calAllForce(BodySystem* bs){
 
 }
+*/
 
-QuadNode::getQuadrant(Body* body){
+void QuadNode::getQuadrant(Body* body){
     //0,1,2,3 means the four quadrant, 5 means that this body does not fit in this quadnode
 	if(body->x >= xmin && body->x <= (xmin+xmax)/2){
 		if(body->y >= ymin && body->y <= (ymin+ymax)/2){
@@ -94,24 +115,26 @@ QuadNode::getQuadrant(Body* body){
 	}else return 5;
 }
 
-QuadNode::getXmin(){
+
+void QuadNode::createChildren(){
+
+}
+
+long double QuadNode::getXmin(){
 	return this->xmin;
 }
-QuadNode::getXmax(){
+long double QuadNode::getXmax(){
 	return this->xmax;
 }
-QuadNode::getYmin(){
+long double QuadNode::getYmin(){
 	return this->ymin;
 }
-QuadNode::getYmax(){
+long double QuadNode::getYmax(){
 	return this->ymax;
 }
-QuadNode::setTheta(){
+void QuadNode::setTheta(){
 	return this->theta;
 }
-QuadNode::isParent(){
+bool QuadNode::isParent(){
 	return this->isparent;
-}
-QuadNode::createChildren(){
-
 }
