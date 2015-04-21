@@ -81,9 +81,10 @@ void QuadNode::calcMass(){
 	this->my=0;
 	this->m=0;
 
-	// for(unsigned int i=0;i<4;i++){
-	// 	if(this->)
-	// }
+	for(unsigned int i=0;i<4;i++){
+		if(this->myChildren[i]->isactive)
+			this->m +=this->myChildren[i]->m;
+	}
 
 
 }
