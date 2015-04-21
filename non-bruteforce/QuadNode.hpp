@@ -12,7 +12,7 @@ private:
 	long double m; //total mass
 	bool isparent;
 	Body* me;
-	QuadNode** mChildren;
+	QuadNode** myChildren;  //Not sure 
 
 public:
 	//Create a quadtree with a certain space
@@ -25,16 +25,16 @@ public:
 	//double x,y; //Center of mass
 
     //Create a quadtree using existing file
-	Quadtree( ParticleSystem* ps );
+	QuadNode( BodySystem* bs );
 
     // deletes all associated memory
-	~Quadtree();
+	~QuadNode();
     
     //Add a single body to the quadnode
 	void addBody (Body* body);
 
     //Add all bodies in the existing file to the quadnode
-	void addAllBody (ParticleSystem* ps);
+	void addAllBody (BodySystem* bs);
 
 	//Clear the contents of the node
 	void clearNode ();
@@ -46,7 +46,7 @@ public:
 	void calcForce(Body* body);
 
 	//Calculate all force
-	void calcAllForce(ParticleSystem* ps);
+	void calcAllForce(BodySystem* bs);
 
 	//Get which quadrant the body is in 
 	void getQuadrant(Body* body);
@@ -64,10 +64,14 @@ public:
 	long double getYmax();
 
 	//Set the threshold of distance/r
-	long double setTheta(long double nTheta);
+	long double setTheta();
 
 	//If the quadnode is a parent, return true
 	bool isParent();
+
+private:
+    //create children for this node
+	void createChildren();
 
 
     
