@@ -49,13 +49,13 @@ void QuadNode::addBody(Body* body)
 	if(!this->isparent){
 		this->createChildren();
 
-		this->myChildren[this->getQuadrant(body)] = addBody(body);
-		this->myChildren[getQuadrant(me)] = addBody(me);
+		this->myChildren[this->getQuadrant(body)]->addBody(body);
+		this->myChildren[getQuadrant(me)]->addBody(me);
 		this->me = NULL;
 
 		this->calcMass();
 	}else{
-		this->myChildren[this->getQuadrant(body)] = addBody(body);
+		this->myChildren[this->getQuadrant(body)]->addBody(body);
 		//this->myChildren[getQuadrant(me)] = addBody(me);
 
 		this->calcMass();
@@ -70,7 +70,26 @@ QuadNode::addAllBody (BodySystem* bs){
 */
 
 void QuadNode::clearNode (){
+	if(!this->isactive)
+		return;
 
+	this->me = NULL;
+	this->m = 0;
+	this->mx = 0;
+	this->my = 0;
+	this->isactive = false;
+
+	if(!this->isparent)
+		return;
+
+	for(unsigned int i=0;i<4;i++){
+		if(this->myChildren[i] != NULL){
+			delete this->myChildren[i];
+			this->myChildren[i] = NULL;
+		}
+	}
+
+	this->isparent = false;
 }
 
 
