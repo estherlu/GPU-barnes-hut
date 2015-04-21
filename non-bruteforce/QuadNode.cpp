@@ -19,14 +19,14 @@ QuadNode::QuadNode(long double x1, long double x2,
 	my(0),
 	m(0),
 	theta(1.0),
-	isactive(true),
+	isactive(false), //should be false, because we'll have empty quadnode initially
 	isparent(false),
 	me(mybody),
 	myChildren(NULL)
 {}
 
 /*
-QuadNode::QuadNode(BodySystem* ps)
+QuadNode::QuadNode(BodySystem* bs)
 {
 	//Some setups with the body system
 }
@@ -60,8 +60,12 @@ void QuadNode::addBody(Body* body)
 
 		this->calcMass();
 	}else{
+<<<<<<< HEAD
+		this->myChildren[this->getQuadrant(body)] = addBody(body);
+=======
 		this->myChildren[this->getQuadrant(body)]->addBody(body);
 		//this->myChildren[getQuadrant(me)] = addBody(me);
+>>>>>>> bb5f90bd0415bfad197c354c6f4cd669665b1abf
 
 		this->calcMass();
 	}
@@ -113,6 +117,7 @@ void QuadNode::calcMass(){
 	//calculate from the children's mass & centre of mass
 	for(unsigned int i=0;i<4;i++){
 		if(this->myChildren[i]->isactive){
+			//If there is a body in myChildren[i],add up the mass and mass*position
 			this->m += this->myChildren[i]->m;
 			this->mx += (this->myChildren[i]->m) * (this->myChildren[i]->mx);
 			this->my += (this->myChildren[i]->m) * (this->myChildren[i]->my);			
@@ -125,7 +130,33 @@ void QuadNode::calcMass(){
 
 
 void QuadNode::calcForce(Body* body){
-
+    long double dx = this->mx - body->x;
+    long double dy = this->my - body->y;
+    long double d2 = dx * dx + dy * dy;
+    long double d = sqrt(d2); //distance from quadnode's center to target body
+    long double h = this->ymax - this->ymin; //height of the quadnode
+    long double r = h/d;
+    if(this->isparent){
+       if(r >= theta)
+        {//We need to separate to four smaller nodes for this quadnode and calculate recursively
+            for(int i = 0; i < 4; i++){
+                if(this->myChildren[i]!=NULL){
+                   this->myChildren[i] -> calcForce(body);
+                }
+            }
+         return;
+        }else{
+            //The condition that we can consider the quadnode as a whole when calculating force
+            body->fx = (dx/d)* (this->m * body->mass /d2);
+            body->fy = (dy/d)* (this->m * body->mass /d2);
+            return;
+        }
+    }else{ //The condition that we only have one body in the quadnode
+        body->fx = (dx/d)* (this->m * body->mass /d2);
+        body->fy = (dy/d)* (this->m * body->mass /d2);  
+        return;      
+    }
+    
 }
 
 /*
@@ -136,16 +167,17 @@ QuadNode::calAllForce(BodySystem* bs){
 
 unsigned int QuadNode::getQuadrant(Body* body){
     //0,1,2,3 means the four quadrant, 5 means that this body does not fit in this quadnode
-	if(body->x >= xmin && body->x <= (xmin+xmax)/2){
-		if(body->y >= ymin && body->y <= (ymin+ymax)/2){
-			return 2;
-		}else if(body->y > (ymin+ymax)/2 && body->y <= ymax){
+	
+	if((body->x >= this->xmin) && (body->x <= (this->xmin + this->xmax)/2)){
+		if((body->y >= this->ymin) && (body->y <= (this->ymin + this->ymax)/2){
+			return 3;
+		}else if((body->y > (this->ymin + this->ymax)/2) && (body->y <= this->ymax)){
 			return 0;
 		}else return 5;
-	}else if(body->x > (xmin+xmax)/2 && body->x <= xmax){
-		if(body->y >= ymin && body->y <= (ymin+ymax)/2){
-			return 3;
-		}else if(body->y > (ymin+ymax)/2 && body->y <= ymax){
+	}else if((body->x > (this->xmin + this->xmax)/2) && (body->x <= this->xmax)){
+		if((body->y >= this->ymin) && (body->y <= (this->ymin + this->ymax)/2)){
+			return 2;
+		}else if((body->y > (this->ymin + this->ymax)/2) && (body->y <= this->ymax){
 			return 1;
 		}else return 5;
 	}else return 5;
