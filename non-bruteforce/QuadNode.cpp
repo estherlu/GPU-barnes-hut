@@ -60,12 +60,10 @@ void QuadNode::addBody(Body* body)
 
 		this->calcMass();
 	}else{
-<<<<<<< HEAD
-		this->myChildren[this->getQuadrant(body)] = addBody(body);
-=======
+
 		this->myChildren[this->getQuadrant(body)]->addBody(body);
 		//this->myChildren[getQuadrant(me)] = addBody(me);
->>>>>>> bb5f90bd0415bfad197c354c6f4cd669665b1abf
+
 
 		this->calcMass();
 	}
@@ -169,7 +167,7 @@ unsigned int QuadNode::getQuadrant(Body* body){
     //0,1,2,3 means the four quadrant, 5 means that this body does not fit in this quadnode
 	
 	if((body->x >= this->xmin) && (body->x <= (this->xmin + this->xmax)/2)){
-		if((body->y >= this->ymin) && (body->y <= (this->ymin + this->ymax)/2){
+		if((body->y >= this->ymin) && (body->y <= (this->ymin + this->ymax)/2)){
 			return 3;
 		}else if((body->y > (this->ymin + this->ymax)/2) && (body->y <= this->ymax)){
 			return 0;
@@ -177,7 +175,7 @@ unsigned int QuadNode::getQuadrant(Body* body){
 	}else if((body->x > (this->xmin + this->xmax)/2) && (body->x <= this->xmax)){
 		if((body->y >= this->ymin) && (body->y <= (this->ymin + this->ymax)/2)){
 			return 2;
-		}else if((body->y > (this->ymin + this->ymax)/2) && (body->y <= this->ymax){
+		}else if((body->y > (this->ymin + this->ymax)/2) && (body->y <= this->ymax)){
 			return 1;
 		}else return 5;
 	}else return 5;
