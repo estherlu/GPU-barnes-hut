@@ -1,6 +1,7 @@
+/**
+*this file defines the quadtree
+**/
 
-
-<<<<<<< HEAD
 #include "QuadNode.hpp"
 
 #include <iostream>
@@ -137,4 +138,3 @@ void QuadNode::setTheta(){
 bool QuadNode::isParent(){
 	return this->isparent;
 }
-
