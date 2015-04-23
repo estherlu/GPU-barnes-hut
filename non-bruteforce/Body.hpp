@@ -19,6 +19,7 @@ class Body{
 		Body();// initialize the body as all zero values
 		Body(double bMass,double bX,double bY);//initialize the body with position and mass
 
+		void resetForce(); //reset the Force before calculation
 		void calcForce(QuadNode* node);//we moved calculation of force into body
 
 
