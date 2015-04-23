@@ -2,7 +2,9 @@
 #define BODY_H
 
 #include <string> 
+#include "QuadNode.hpp"
 
+class QuadNode;
 
 class Body{
 
