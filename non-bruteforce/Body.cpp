@@ -33,5 +33,40 @@ Body::Body(double bMass,double bX,double bY):
 	mass(bMass)
 {}
 
+void Body::resetForce(){
+	this->fx= 0;
+	this->fy= 0;
+
+}
+
+void Body::calcForce(Quadnode* node){
+    long double dx = node->mx - this->x;
+    long double dy = node->my - this->y;
+    long double d2 = dx * dx + dy * dy;
+    long double d = sqrt(d2); //distance from quadnode's center to target body
+    long double h = node->ymax - node->ymin; //height of the quadnode
+    long double r = h/d;
+    if(node->isparent){
+       if(r >= theta)
+        {//We need to separate to four smaller nodes for this quadnode and calculate recursively
+            for(int i = 0; i < 4; i++){
+                if(node->myChildren[i]!=NULL){
+                   this-> calcForce(node->myChildren[i]);
+                }
+            }
+         return;
+        }else{
+            //The condition that we can consider the quadnode as a whole when calculating force
+            this->fx += (dx/d)* (node->m * this->mass /d2);
+            this->fy += (dy/d)* (node->m * this->mass /d2);
+            return;
+        }
+    }else{ //The condition that we only have one body in the quadnode
+        this->fx += (dx/d)* (node->m * this->mass /d2);
+        this->fy += (dy/d)* (node->m * this->mass /d2);  
+        return;      
+    }
+    
+}
 
 
