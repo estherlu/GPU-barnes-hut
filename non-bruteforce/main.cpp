@@ -33,7 +33,7 @@ int main(int argc, char const *argv[])
 		inb = rand()%1000;//y
 		inc = rand()%1000;//mass
 
-		myList[i] = new Body(ina,inb,0.0,0.0,inc);
+		myList[i] = new Body(ina,inb,inc);
 		
 		printf("%d) ",i + 1);
 		myList[i]->toString();
@@ -41,9 +41,26 @@ int main(int argc, char const *argv[])
 
 	printf("\nInitialize Bodies done!\n");
 
-	QuadNode *mytree = new QuadNode();
+	QuadNode *mytree = new QuadNode(0,1000,0,1000,NULL);
 
-	
+	run(count, myList, mytree);	
 	return 0;
 }
 
+
+
+void run(count, Body *myList[], QuadNode *tree)
+{
+	tree.clearNode();
+	for(int i = 0 ; i < count ; i++){
+		mytree->addBody(myList[i]);
+					
+	}
+
+	for(int i = 0 ; i < count ; i++){
+		myList[i]->resetForce();
+		myList[i]->calcForce(tree);
+		myList[i]->update();
+	}
+
+}
