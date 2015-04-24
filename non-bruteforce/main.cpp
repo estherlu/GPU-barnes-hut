@@ -7,12 +7,17 @@
 
 #include "Body.hpp"
 #include "QuadNode.hpp"
+#include "Body.cpp"
+#include "QuadNode.cpp"
 
 //#include "StartSimulation.h"
 
 #define GRIDSIDES 1000
 #define NUMBODY 10
 #define MAXMASS 20
+
+class Body;
+class QuadNode;
 
 
 void run(int count, Body *myList[], QuadNode *tree);
@@ -36,7 +41,7 @@ int main(int argc, char const *argv[])
 		inb = rand()%1000;//y
 		inc = rand()%1000;//mass
 
-		myList[i] = new Body(ina,inb,inc);
+		myList[i] = new Body((double)ina,(double)inb,(double)inc);
 		
 		printf("%d) ",i + 1);
 		myList[i]->toString();
