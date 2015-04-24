@@ -60,7 +60,7 @@ void run(count, Body *myList[], QuadNode *tree)
 	for(int i = 0 ; i < count ; i++){
 		myList[i]->resetForce();
 		myList[i]->calcForce(tree);
-		myList[i]->update();
+		myList[i]->calcPosition();
 	}
 
 }
