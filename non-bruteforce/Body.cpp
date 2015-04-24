@@ -15,21 +15,17 @@ Body::Body():
 	y(0),
 	fx(0),
 	fy(0),
-	ax(0),
-	ay(0),
 	vx(0),
 	vy(0),
 	mass(0)
 {}
 
 
-Body::Body(double bMass,double bX,double bY):
+Body::Body(long double bX,long double bY,long double bMass):
 	x(bX),
 	y(bY),
 	fx(0),
 	fy(0),
-	ax(0),
-	ay(0),
 	vx(0),
 	vy(0),
 	mass(bMass)
@@ -69,6 +65,14 @@ void Body::calcForce(QuadNode* node){
         return;      
     }
     
+}
+
+void Body::calcPosition(long double time){
+        this->vx += this->fx * time / this->mass;
+        this->vy += this->fy * time / this->mass;
+
+        this->x += vx * time;
+        this->y += vy * time;
 }
 
 
