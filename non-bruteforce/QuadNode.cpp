@@ -25,13 +25,9 @@ QuadNode::QuadNode(long double x1, long double x2,
 	myChildren(NULL)
 {}
 
-/*
-QuadNode::QuadNode(BodySystem* bs)
-{
-	//Some setups with the body system
-}
-*/
 
+
+//deconstruction the quadnode
 QuadNode::~QuadNode()
 {
 	this->clearNode();

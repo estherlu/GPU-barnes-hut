@@ -24,7 +24,7 @@ class Body{
 
 		void resetForce(); //reset the Force before calculation
 		void calcForce(QuadNode* node);//we moved calculation of force into body
-
+        void calcPosition(long double time);
 
 
 };
