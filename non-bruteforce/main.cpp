@@ -20,7 +20,7 @@ class Body;
 class QuadNode;
 
 
-void run(int count, Body *myList[], QuadNode *tree);
+void run(int count, Body **myList, QuadNode *tree);
 
 
 int main(int argc, char const *argv[])
@@ -35,7 +35,8 @@ int main(int argc, char const *argv[])
 		count=3;
 	}
 
-	Body *myList [count];
+	Body **myList;
+	myList = new Body*[count];
 	for(int i = 0; i < count; i++){
 		ina = rand()%1000;//x
 		inb = rand()%1000;//y
@@ -49,7 +50,7 @@ int main(int argc, char const *argv[])
 
 	printf("\nInitialize Bodies done!\n");
 
-	QuadNode *mytree = new QuadNode(0,1000,0,1000,NULL);
+	QuadNode *mytree = new QuadNode(0,1000,0,1000);
 
 	run(count, myList, mytree);	
 	return 0;
@@ -57,7 +58,7 @@ int main(int argc, char const *argv[])
 
 
 
-void run(int count, Body *myList[], QuadNode *tree)
+void run(int count, Body **myList, QuadNode *tree)
 {
 	tree->clearNode();
 	for(int i = 0 ; i < count ; i++){
@@ -69,6 +70,8 @@ void run(int count, Body *myList[], QuadNode *tree)
 		myList[i]->resetForce();
 		myList[i]->calcForce(tree);
 		myList[i]->calcPosition(1);
+		myList[i]->toString();
 	}
+
 
 }
