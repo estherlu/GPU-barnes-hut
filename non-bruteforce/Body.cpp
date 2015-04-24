@@ -75,4 +75,10 @@ void Body::calcPosition(long double time){
         this->y += vy * time;
 }
 
+void Body::toString(){
+		
+	printf("Mass:%.1f\tPosition:%.1f,%.1f\tVelocity:%.1f,%.1f Force::%.1f,%.1f\n",this->mass, this->x,this->y,this->vx,this->vy,this->fx,this->fy);
+	
+}
+
 

@@ -5,8 +5,8 @@
 #include <stdio.h>      /* printf, scanf, puts, NULL */
 #include <stdlib.h>     /* srand, rand */      
 
-#include "Body.h"
-#include "QuadNode.h"
+#include "Body.hpp"
+#include "QuadNode.hpp"
 
 //#include "StartSimulation.h"
 
@@ -15,7 +15,7 @@
 #define MAXMASS 20
 
 
-void run();
+void run(int count, Body *myList[], QuadNode *tree);
 
 
 int main(int argc, char const *argv[])
@@ -26,9 +26,12 @@ int main(int argc, char const *argv[])
     {   
     	count = atoi( argv[1] );
 	}
+	else{
+		count=3;
+	}
 
 	Body *myList [count];
-	for(i = 0; i < count; i++){
+	for(int i = 0; i < count; i++){
 		ina = rand()%1000;//x
 		inb = rand()%1000;//y
 		inc = rand()%1000;//mass
@@ -49,18 +52,18 @@ int main(int argc, char const *argv[])
 
 
 
-void run(count, Body *myList[], QuadNode *tree)
+void run(int count, Body *myList[], QuadNode *tree)
 {
-	tree.clearNode();
+	tree->clearNode();
 	for(int i = 0 ; i < count ; i++){
-		mytree->addBody(myList[i]);
+		tree->addBody(myList[i]);
 					
 	}
 
 	for(int i = 0 ; i < count ; i++){
 		myList[i]->resetForce();
 		myList[i]->calcForce(tree);
-		myList[i]->calcPosition();
+		myList[i]->calcPosition(1);
 	}
 
 }
