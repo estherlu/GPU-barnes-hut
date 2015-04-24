@@ -1,11 +1,15 @@
 #ifndef QUADNODE_H
 #define QUADNODE_H
+
 #include "Body.hpp"
 
 #include <string> 
 
+
+class Body;
+
 class QuadNode{
-private:
+public:
 	long double xmin,xmax;
 	long double ymin,ymax;
 	long double theta;
@@ -16,7 +20,6 @@ private:
 	Body* me;
 	QuadNode** myChildren;  //Not sure 
 
-public:
 	//Create a quadtree with a certain space
 	QuadNode(long double x1, long double x2, 
 		long double y1, long double y2, Body* mybody);
@@ -63,6 +66,9 @@ public:
 	//Set the threshold of distance/r
 	void setTheta(long double inTheta);
 
+	//get the value of threshold theta
+	long double getTheta();
+
 	//If the quadnode is a parent, return true
 	bool isParent();
 
@@ -71,6 +77,8 @@ private:
 	void createChildren();
 
 };
+
+
 
 #endif
 

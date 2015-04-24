@@ -127,35 +127,35 @@ void QuadNode::calcMass(){
 }
 
 
-void QuadNode::calcForce(Body* body){
-    long double dx = this->mx - body->x;
-    long double dy = this->my - body->y;
-    long double d2 = dx * dx + dy * dy;
-    long double d = sqrt(d2); //distance from quadnode's center to target body
-    long double h = this->ymax - this->ymin; //height of the quadnode
-    long double r = h/d;
-    if(this->isparent){
-       if(r >= theta)
-        {//We need to separate to four smaller nodes for this quadnode and calculate recursively
-            for(int i = 0; i < 4; i++){
-                if(this->myChildren[i]!=NULL){
-                   this->myChildren[i] -> calcForce(body);
-                }
-            }
-         return;
-        }else{
-            //The condition that we can consider the quadnode as a whole when calculating force
-            body->fx = (dx/d)* (this->m * body->mass /d2);
-            body->fy = (dy/d)* (this->m * body->mass /d2);
-            return;
-        }
-    }else{ //The condition that we only have one body in the quadnode
-        body->fx = (dx/d)* (this->m * body->mass /d2);
-        body->fy = (dy/d)* (this->m * body->mass /d2);  
-        return;      
-    }
+// void QuadNode::calcForce(Body* body){
+//     long double dx = this->mx - body->x;
+//     long double dy = this->my - body->y;
+//     long double d2 = dx * dx + dy * dy;
+//     long double d = sqrt(d2); //distance from quadnode's center to target body
+//     long double h = this->ymax - this->ymin; //height of the quadnode
+//     long double r = h/d;
+//     if(this->isparent){
+//        if(r >= theta)
+//         {//We need to separate to four smaller nodes for this quadnode and calculate recursively
+//             for(int i = 0; i < 4; i++){
+//                 if(this->myChildren[i]!=NULL){
+//                    this->myChildren[i] -> calcForce(body);
+//                 }
+//             }
+//          return;
+//         }else{
+//             //The condition that we can consider the quadnode as a whole when calculating force
+//             body->fx = (dx/d)* (this->m * body->mass /d2);
+//             body->fy = (dy/d)* (this->m * body->mass /d2);
+//             return;
+//         }
+//     }else{ //The condition that we only have one body in the quadnode
+//         body->fx = (dx/d)* (this->m * body->mass /d2);
+//         body->fy = (dy/d)* (this->m * body->mass /d2);  
+//         return;      
+//     }
     
-}
+// }
 
 /*
 QuadNode::calAllForce(BodySystem* bs){
@@ -232,6 +232,9 @@ void QuadNode::setTheta(long double inTheta){
 		return;
 	for(unsigned int i=0;i<4;i++)
 		this->myChildren[i]->setTheta(this->theta);
+}
+long double QuadNode::getTheta(){
+	return this->theta;
 }
 bool QuadNode::isParent(){
 	return this->isparent;

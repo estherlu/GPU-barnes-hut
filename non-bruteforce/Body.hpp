@@ -3,6 +3,9 @@
 
 #include <string> 
 
+#include "QuadNode.hpp"
+
+class QuadNode;
 
 class Body{
 
@@ -23,7 +26,10 @@ class Body{
 		void calcForce(QuadNode* node);//we moved calculation of force into body
 
 
+
 };
+
+
 
 
 
