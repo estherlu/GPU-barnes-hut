@@ -21,7 +21,7 @@ Body::Body():
 {}
 
 
-Body::Body(long double bX,long double bY,long double bMass):
+Body::Body(double bX,double bY,double bMass):
 	x(bX),
 	y(bY),
 	fx(0),
@@ -76,7 +76,7 @@ void Body::calcPosition(long double time){
 }
 
 void Body::toString(){
-		
+
 	printf("Mass:%.1f\tPosition:%.1f,%.1f\tVelocity:%.1f,%.1f Force::%.1f,%.1f\n",this->mass, this->x,this->y,this->vx,this->vy,this->fx,this->fy);
 	
 }

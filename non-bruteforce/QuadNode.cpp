@@ -10,20 +10,33 @@ using std::cout;
 #include <cmath>
 
 QuadNode::QuadNode(long double x1, long double x2, 
-		long double y1, long double y2, Body* mybody):
-	xmin(xmin),
-	xmax(xmax),
-	ymin(ymin),
-	ymax(ymax),
-	mx(0),
-	my(0),
-	m(0),
-	theta(1.0),
-	isactive(false), //should be false, because we'll have empty quadnode initially
-	isparent(false),
-	me(mybody),
-	myChildren(NULL)
-{}
+		long double y1, long double y2)
+	// xmin(x1),
+	// xmax(x1),
+	// ymin(y1),
+	// ymax(y2),
+	// mx(0),
+	// my(0),
+	// m(0),
+	// theta(1.0),
+	// isactive(false), //should be false, because we'll have empty quadnode initially
+	// isparent(false),
+	// me(NULL),
+	// myChildren(NULL)
+{
+	this->xmin=x1;
+	this->xmax=x2;
+	this->ymin=y1;
+	this->ymax=y2;
+	this->mx=0;
+	this->my=0;
+	this->m=0;
+	this->theta=1.0;
+	this->isactive=false; //should be false, because we'll have empty quadnode initially
+	this->isparent=false;
+	this->me=NULL;
+	this->myChildren=NULL;
+}
 
 
 
@@ -36,7 +49,7 @@ QuadNode::~QuadNode()
 void QuadNode::addBody(Body* body)
 {
 	//If this quadnode does not have a body in it, just add new body and return.
-	if(!isactive){
+	if(!this->isactive){
 		this->me = body;
 		this->mx = body->x;
 		this->my = body->y;
@@ -195,16 +208,16 @@ void QuadNode::createChildren(){
 	long double xmid = (this->xmin + this->xmax)/2;
 	long double ymid = (this->ymin + this->ymax)/2;
 
-	this->myChildren[0]= new QuadNode(this->xmin, xmid, ymid, this->ymax, NULL);
+	this->myChildren[0]= new QuadNode(this->xmin, xmid, ymid, this->ymax);
 	this->myChildren[0]->setTheta(this->theta);
 
-	this->myChildren[1]= new QuadNode(xmid, this->xmax, ymid, this->ymax, NULL);
+	this->myChildren[1]= new QuadNode(xmid, this->xmax, ymid, this->ymax);
 	this->myChildren[1]->setTheta(this->theta);
 
-	this->myChildren[2]= new QuadNode(xmid, this->xmax, this->ymin, ymid, NULL);
+	this->myChildren[2]= new QuadNode(xmid, this->xmax, this->ymin, ymid);
 	this->myChildren[2]->setTheta(this->theta);
 
-	this->myChildren[3]= new QuadNode(this->xmin, xmid, this->ymin, ymid, NULL);
+	this->myChildren[3]= new QuadNode(this->xmin, xmid, this->ymin, ymid);
 	this->myChildren[3]->setTheta(this->theta);
 
 	this->isparent=true; 

@@ -22,7 +22,7 @@ public:
 
 	//Create a quadtree with a certain space
 	QuadNode(long double x1, long double x2, 
-		long double y1, long double y2, Body* mybody);
+		long double y1, long double y2);
 
     //Create a quadtree using existing file
 //	QuadNode( BodySystem* bs );
