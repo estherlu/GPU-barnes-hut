@@ -52,7 +52,10 @@ int main(int argc, char const *argv[])
 
 	QuadNode *mytree = new QuadNode(0,1000,0,1000);
 
-	run(count, myList, mytree);	
+	for(int j=0;j<5;j++)
+		printf("round %d\n",j);
+		run(count, myList, mytree);	
+	
 	return 0;
 }
 
@@ -63,8 +66,8 @@ void run(int count, Body **myList, QuadNode *tree)
 	tree->clearNode();
 	for(int i = 0 ; i < count ; i++){
 		tree->addBody(myList[i]);
-		printf("\nafter insert");
-		myList[i]->toString();			
+		// printf("\nafter insert");
+		// myList[i]->toString();			
 	}
 
 

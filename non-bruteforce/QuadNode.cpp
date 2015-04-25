@@ -48,6 +48,10 @@ QuadNode::~QuadNode()
 
 void QuadNode::addBody(Body* body)
 {
+	if(this->getQuadrant(body)==5){
+		return;
+	}
+
 	//If this quadnode does not have a body in it, just add new body and return.
 	if(!this->isactive){
 		this->me = body;
