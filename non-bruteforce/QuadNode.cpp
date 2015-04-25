@@ -9,8 +9,8 @@ using std::cerr;
 using std::cout;
 #include <cmath>
 
-QuadNode::QuadNode(long double x1, long double x2, 
-		long double y1, long double y2)
+QuadNode::QuadNode(double x1, double x2, 
+		double y1, double y2)
 	// xmin(x1),
 	// xmax(x1),
 	// ymin(y1),
@@ -64,7 +64,7 @@ void QuadNode::addBody(Body* body)
 		this->createChildren();
 
 		this->myChildren[this->getQuadrant(body)]->addBody(body);
-		this->myChildren[getQuadrant(me)]->addBody(me);
+		this->myChildren[this->getQuadrant(me)]->addBody(me);
 		this->me = NULL;
 
 		this->calcMass();
@@ -114,6 +114,9 @@ void QuadNode::clearNode (){
 
 
 void QuadNode::calcMass(){
+	
+	if(!this->isactive)
+		return;
 	if(!this->isparent)
 		return;
 	//reset the center of mass and total mass to 0
@@ -137,12 +140,12 @@ void QuadNode::calcMass(){
 
 
 // void QuadNode::calcForce(Body* body){
-//     long double dx = this->mx - body->x;
-//     long double dy = this->my - body->y;
-//     long double d2 = dx * dx + dy * dy;
-//     long double d = sqrt(d2); //distance from quadnode's center to target body
-//     long double h = this->ymax - this->ymin; //height of the quadnode
-//     long double r = h/d;
+//     double dx = this->mx - body->x;
+//     double dy = this->my - body->y;
+//     double d2 = dx * dx + dy * dy;
+//     double d = sqrt(d2); //distance from quadnode's center to target body
+//     double h = this->ymax - this->ymin; //height of the quadnode
+//     double r = h/d;
 //     if(this->isparent){
 //        if(r >= theta)
 //         {//We need to separate to four smaller nodes for this quadnode and calculate recursively
@@ -205,8 +208,8 @@ void QuadNode::createChildren(){
 
 	//divide the node into four parts, each part as a child
 	this->myChildren=new QuadNode*[4];
-	long double xmid = (this->xmin + this->xmax)/2;
-	long double ymid = (this->ymin + this->ymax)/2;
+	double xmid = (this->xmin + this->xmax)/2;
+	double ymid = (this->ymin + this->ymax)/2;
 
 	this->myChildren[0]= new QuadNode(this->xmin, xmid, ymid, this->ymax);
 	this->myChildren[0]->setTheta(this->theta);
@@ -223,26 +226,26 @@ void QuadNode::createChildren(){
 	this->isparent=true; 
 }
 
-long double QuadNode::getXmin(){
+double QuadNode::getXmin(){
 	return this->xmin;
 }
-long double QuadNode::getXmax(){
+double QuadNode::getXmax(){
 	return this->xmax;
 }
-long double QuadNode::getYmin(){
+double QuadNode::getYmin(){
 	return this->ymin;
 }
-long double QuadNode::getYmax(){
+double QuadNode::getYmax(){
 	return this->ymax;
 }
-void QuadNode::setTheta(long double inTheta){
+void QuadNode::setTheta(double inTheta){
 	this->theta=inTheta;
 	if(!this->isparent)
 		return;
 	for(unsigned int i=0;i<4;i++)
 		this->myChildren[i]->setTheta(this->theta);
 }
-long double QuadNode::getTheta(){
+double QuadNode::getTheta(){
 	return this->theta;
 }
 bool QuadNode::isParent(){

@@ -10,19 +10,19 @@ class Body;
 
 class QuadNode{
 public:
-	long double xmin,xmax;
-	long double ymin,ymax;
-	long double theta;
-	long double mx, my;//center of mass
-	long double m; //total mass
+	double xmin,xmax;
+	double ymin,ymax;
+	double theta;
+	double mx, my;//center of mass
+	double m; //total mass
 	bool isactive; 
 	bool isparent;
 	Body* me;
 	QuadNode** myChildren;  //Not sure 
 
 	//Create a quadtree with a certain space
-	QuadNode(long double x1, long double x2, 
-		long double y1, long double y2);
+	QuadNode(double x1, double x2, 
+		double y1, double y2);
 
     //Create a quadtree using existing file
 //	QuadNode( BodySystem* bs );
@@ -52,22 +52,22 @@ public:
 	unsigned int getQuadrant(Body* body);
 
 	//Get the left side of the quadnode
-	long double getXmin();
+	double getXmin();
 
     //Get the right side of the quadnode
-	long double getXmax();
+	double getXmax();
     
     //Get the botton of the quadnode
-	long double getYmin();
+	double getYmin();
 
 	//Get the top of the quadnode
-	long double getYmax();
+	double getYmax();
 
 	//Set the threshold of distance/r
-	void setTheta(long double inTheta);
+	void setTheta(double inTheta);
 
 	//get the value of threshold theta
-	long double getTheta();
+	double getTheta();
 
 	//If the quadnode is a parent, return true
 	bool isParent();

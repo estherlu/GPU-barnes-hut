@@ -63,14 +63,20 @@ void run(int count, Body **myList, QuadNode *tree)
 	tree->clearNode();
 	for(int i = 0 ; i < count ; i++){
 		tree->addBody(myList[i]);
-					
+		printf("\nafter insert");
+		myList[i]->toString();			
 	}
+
+
 
 	for(int i = 0 ; i < count ; i++){
 		myList[i]->resetForce();
+
 		myList[i]->calcForce(tree);
-		myList[i]->calcPosition(1);
-		myList[i]->toString();
+		printf("\nafter calc");
+		//myList[i]->toString();
+		myList[i]->calcPosition(10);
+		myList[i]->toString();	
 	}
 
 
