@@ -52,10 +52,10 @@ int main(int argc, char const *argv[])
 
 	QuadNode *mytree = new QuadNode(0,1000,0,1000);
 
-	for(int j=0;j<5;j++)
+	for(int j=0;j<5;j++){
 		printf("round %d\n",j);
 		run(count, myList, mytree);	
-	
+	}
 	return 0;
 }
 
